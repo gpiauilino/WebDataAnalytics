@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskApp</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+
+<body>
+    <h1>Hello World!</h1>
+    <h2>{{vendas}} to FlaskApp!</h2>
+    <div id="chart">
+    </div>
+    <h3>{{ utc_dt }}</h3>
+
+    <script>
+
+        var options = {
+            chart: {
+                type: 'bar'
+            },
+            series: [{
+                name: 'sales',
+                data: {{vendas}}
+            }],
+            xaxis: {
+                categories: {{anos}}
+            }
+        }
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+        chart.render();
+
+    </script>
+
+
+
+</body>
+
+</html>
