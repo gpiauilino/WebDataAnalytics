@@ -1,0 +1,56 @@
+<!-- <!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskBlog</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <!- stylesheet type of link ->
+        <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
+</head>
+
+<body>
+    <h1>Analytics</h1>
+    <h2>App to FlaskApp!</h2>
+    <div id="chart">
+    </div>
+    <h3>{{ utc_dt }}</h3>
+
+    <script>
+
+        var options = {
+            chart: {
+                type: 'bar'
+            },
+            series: [{
+                name: 'sales',
+                data: {{ vendas }}
+            }],
+        xaxis: {
+            categories: { { anos } }
+        }
+        }
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+        chart.render();
+
+    </script>
+
+</body>
+
+</html>
+
+-->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
+    {% for post in posts %}
+        <a href="#">
+            <h2>{{ post['title'] }}</h2>
+        </a>
+        <span class="badge badge-primary">{{ post['created'] }}</span>
+        <hr>
+    {% endfor %}
+{% endblock %}

@@ -1,13 +1,31 @@
 from flask import Flask, Response, render_template
-
+import sqlite3
 import os
 import datetime
 from flask import send_from_directory
-import csv
-
-import pandas as pd
+from werkzeug.exceptions import abort
 
 app = Flask(__name__)
+
+#A função get_db_connection() abre uma conexão ao arquivo de banco de dados database.db e, em seguida,
+# define o atributo row_factory ao sqlite3.Row para que você tenha acesso baseado em nome às colunas. 
+# Ou seja, a conexão do banco de dados retornará linhas que se comportam como um dicionário comum do Python. 
+# Por último, a função retorna o objeto de conexão conn que você utilizará para acessar o banco de dados.
+
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+#Chamada de função para realizar select filtrada pelo id.
+def get_post(post_id):
+    conn = get_db_connection()
+    post = conn.execute('SELECT * FROM posts WHERE id = ?',
+                        (post_id,)).fetchone()
+    conn.close()
+    if post is None:
+        abort(404)
+    return post
 
 def get_file(filename):  # pragma: no cover
     try:
@@ -21,22 +39,21 @@ def get_file(filename):  # pragma: no cover
     except IOError as exc:
         return str(exc)
 
-
 @app.route('/')
-def hello_world():
- #   content = get_file('jenkins_analytics.html')
- #   return Response(content, mimetype="text/html")
- # Aqui qeue bota as series
-    return render_template('jenkins_analytics.html',  utc_dt=datetime.datetime.utcnow(), 
-        vendas = [30, 40, 45, 50, 49, 60, 70, 91, 125, 100], 
-        anos= [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2022] )
-
+def index():
+    conn = get_db_connection()
+    posts = conn.execute('SELECT * FROM posts').fetchall()
+    conn.close()
+    return render_template('index.html', posts=posts)
 
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
-
+@app.route('/<int:post_id>')
+def post(post_id):
+    post = get_post(post_id)
+    return render_template('post.html', post=post)
 
 if __name__ == '__main__':  # pragma: no cover
-    app.run(port=5000)
+    app.run(port=5001)
