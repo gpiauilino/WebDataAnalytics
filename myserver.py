@@ -1,4 +1,5 @@
-from flask import Flask, Response, render_template
+from flask import Flask, Response, render_template,  request, url_for, flash, redirect
+from werkzeug.exceptions import abort
 import sqlite3
 import os
 import datetime
@@ -6,6 +7,7 @@ from flask import send_from_directory
 from werkzeug.exceptions import abort
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '351727jake'
 
 #A função get_db_connection() abre uma conexão ao arquivo de banco de dados database.db e, em seguida,
 # define o atributo row_factory ao sqlite3.Row para que você tenha acesso baseado em nome às colunas. 
@@ -54,6 +56,32 @@ def favicon():
 def post(post_id):
     post = get_post(post_id)
     return render_template('post.html', post=post)
+
+#função que renderizará o modelo de formulário
+
+@app.route('/create', methods=('GET', 'POST'))
+def create():
+    return render_template('create.html')
+
+@app.route('/<int:id>/edit', methods=('GET', 'POST'))
+def edit(id):
+    post = get_post(id)
+
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+
+        if not title:
+            flash('Title is required')
+        else:
+            conn = get_db_connection()
+            conn.execute('UPDATE posts SET title = ?, content = ?'
+                         ' WHERE id = ?',
+                         (title, content, id))
+            conn.commit()
+            return redirect(url_for('index'))
+
+    return render_template('edit.html', post=post)
 
 if __name__ == '__main__':  # pragma: no cover
     app.run(port=5001)
