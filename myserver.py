@@ -114,9 +114,8 @@ def delete(id):
 
 @app.route('/analytics')
 def analytics():
-    users = User.query
-    return render_template('bootstrap_table.html', title='Bootstrap Table',
-                           users=users)
+     return render_template('analytics.html', title='Bootstrap Table',
+    )
 
 if __name__ == '__main__':  # pragma: no cover
     app.run(port=5001)

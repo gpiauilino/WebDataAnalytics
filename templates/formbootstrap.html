@@ -1,0 +1,81 @@
+<div class="container px-5 my-5">
+    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="postagem" type="text" placeholder="Postagem" style="height: 10rem;" data-sb-validations="required"></textarea>
+            <label for="postagem">Postagem</label>
+            <div class="invalid-feedback" data-sb-feedback="postagem:required">Postagem is required.</div>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" id="titulo" type="text" placeholder="Titulo" data-sb-validations="required" />
+            <label for="titulo">Titulo</label>
+            <div class="invalid-feedback" data-sb-feedback="titulo:required">Titulo is required.</div>
+        </div>
+        <div class="form-floating mb-3">
+            <select class="form-select" id="newField16" aria-label="New Field 16">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <label for="newField16">New Field 16</label>
+        </div>
+        <div class="mb-3">
+            <label class="form-label d-block">New Field 18</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" id="optionA" type="radio" name="newField18" data-sb-validations="required" />
+                <label class="form-check-label" for="optionA">option A</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" id="optionB" type="radio" name="newField18" data-sb-validations="required" />
+                <label class="form-check-label" for="optionB">option B</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" id="optionC" type="radio" name="newField18" data-sb-validations="required" />
+                <label class="form-check-label" for="optionC">option C</label>
+            </div>
+            <div class="invalid-feedback" data-sb-feedback="newField18:required">One option is required.</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label d-block">New Field 22</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" id="optionA" type="checkbox" name="newField22" data-sb-validations="" />
+                <label class="form-check-label" for="optionA">option A</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" id="optionB" type="checkbox" name="newField22" data-sb-validations="" />
+                <label class="form-check-label" for="optionB">option B</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" id="optionC" type="checkbox" name="newField22" data-sb-validations="" />
+                <label class="form-check-label" for="optionC">option C</label>
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required,email" />
+            <label for="emailAddress">Email Address</label>
+            <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Email Address is required.</div>
+            <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
+        </div>
+        <div class="mb-3">
+            <div class="form-check form-switch">
+                <input class="form-check-input" id="receberNotificacoes" type="checkbox" name="receberNotificacoes" />
+                <label class="form-check-label" for="receberNotificacoes">Receber notificações</label>
+            </div>
+        </div>
+        <div class="d-none" id="submitSuccessMessage">
+            <div class="text-center mb-3">
+                <div class="fw-bolder">Form submission successful!</div>
+                <p>To activate this form, sign up at</p>
+                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+            </div>
+        </div>
+        <div class="d-none" id="submitErrorMessage">
+            <div class="text-center text-danger mb-3">Error sending message!</div>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>

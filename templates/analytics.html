@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>Dashboard</h1>
+<h4> Data resume at table</h4>
   <table id="data" class="table table-striped">
     <thead>
       <tr>
         <th>Name</th>
-        <th>Age</th>
+        <th class="myclass">Age</th>
         <th>Address</th>
         <th>Phone Number</th>
         <th>Email</th>
@@ -15,7 +17,7 @@
       {% for user in users %}
         <tr>
           <td>{{ user.name }}</td>
-          <td>{{ user.age }}</td>
+          <td class="myclass">{{ user.age }}</td>
           <td>{{ user.address }}</td>
           <td>{{ user.phone }}</td>
           <td>{{ user.email }}</td>

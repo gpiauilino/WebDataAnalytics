@@ -1,7 +1,19 @@
+
 h1 {
-    border: 2px #eee solid;
-    color: brown;
-    text-align: center;
-    padding: 10px;
+    color: rgb(40, 34, 218);
+    text-align: left;
+    padding: 1px;
     
+}
+
+h2{
+    color: rgb(40, 34, 218);
+    text-align: left;
+    padding: 5px;
+    
+
+}
+
+.myclass{
+    color: aqua;
 }
