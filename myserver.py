@@ -112,5 +112,11 @@ def delete(id):
     flash('"{}" was successfully deleted!'.format(post['title']))
     return redirect(url_for('index'))
 
+@app.route('/analytics')
+def analytics():
+    users = User.query
+    return render_template('bootstrap_table.html', title='Bootstrap Table',
+                           users=users)
+
 if __name__ == '__main__':  # pragma: no cover
     app.run(port=5001)
