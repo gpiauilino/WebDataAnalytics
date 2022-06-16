@@ -1,10 +1,13 @@
 from flask import Flask, Response, render_template,  request, url_for, flash, redirect
+import flask
 from werkzeug.exceptions import abort
 import sqlite3
 import os
 import datetime
 from flask import send_from_directory
 from werkzeug.exceptions import abort
+
+from dataimporter import importer_csv
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '351727jake'
@@ -28,6 +31,18 @@ def get_post(post_id):
     if post is None:
         abort(404)
     return post
+
+
+
+custom_color_global_variable = 'red'
+
+@app.route('/grafico.svg', methods=('GET', 'HEAD'))
+def circle_thin_custom_color():
+    """Thin circle with the color set by a global variable."""
+    return flask.Response(importer_csv(),
+        mimetype='image/svg+xml'
+    )
+
 
 def get_file(filename):  # pragma: no cover
     try:
@@ -114,7 +129,7 @@ def delete(id):
 
 @app.route('/analytics')
 def analytics():
-     return render_template('analytics.html', title='Bootstrap Table',
+     return render_template('analytics.html', title='Bootstrap Table'
     )
 
 if __name__ == '__main__':  # pragma: no cover
