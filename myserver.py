@@ -12,17 +12,20 @@ from dataimporter import importer_csv
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '351727jake'
 
-#A função get_db_connection() abre uma conexão ao arquivo de banco de dados database.db e, em seguida,
-# define o atributo row_factory ao sqlite3.Row para que você tenha acesso baseado em nome às colunas. 
-# Ou seja, a conexão do banco de dados retornará linhas que se comportam como um dicionário comum do Python. 
+# A função get_db_connection() abre uma conexão ao arquivo de banco de dados database.db e, em seguida,
+# define o atributo row_factory ao sqlite3.Row para que você tenha acesso baseado em nome às colunas.
+# Ou seja, a conexão do banco de dados retornará linhas que se comportam como um dicionário comum do Python.
 # Por último, a função retorna o objeto de conexão conn que você utilizará para acessar o banco de dados.
+
 
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
-#Chamada de função para realizar select filtrada pelo id.
+# Chamada de função para realizar select filtrada pelo id.
+
+
 def get_post(post_id):
     conn = get_db_connection()
     post = conn.execute('SELECT * FROM posts WHERE id = ?',
@@ -33,15 +36,21 @@ def get_post(post_id):
     return post
 
 
-
 custom_color_global_variable = 'red'
+
 
 @app.route('/grafico.svg', methods=('GET', 'HEAD'))
 def circle_thin_custom_color():
     """Thin circle with the color set by a global variable."""
     return flask.Response(importer_csv(),
-        mimetype='image/svg+xml'
-    )
+                          mimetype='image/svg+xml'
+                          )
+
+
+@app.route('/analytics')
+def analytics():
+    return render_template('analytics.html', title='Bootstrap Table'
+                           )
 
 
 def get_file(filename):  # pragma: no cover
@@ -56,6 +65,7 @@ def get_file(filename):  # pragma: no cover
     except IOError as exc:
         return str(exc)
 
+
 @app.route('/')
 def index():
     conn = get_db_connection()
@@ -63,21 +73,24 @@ def index():
     conn.close()
     return render_template('index.html', posts=posts)
 
+
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
-#Se não for encontrado id a função terminará a execução. 
-# No entanto, se uma postagem for encontrada, 
+# Se não for encontrado id a função terminará a execução.
+# No entanto, se uma postagem for encontrada,
 # retorna-se o valor da variável post.
+
 
 @app.route('/<int:post_id>')
 def post(post_id):
     post = get_post(post_id)
     return render_template('post.html', post=post)
 
-#função que renderizará o modelo de formulário
+# função que renderizará o modelo de formulário
+
 
 @app.route('/create', methods=('GET', 'POST'))
 def create():
@@ -96,6 +109,7 @@ def create():
             return redirect(url_for('index'))
 
     return render_template('create.html')
+
 
 @app.route('/<int:id>/edit', methods=('GET', 'POST'))
 def edit(id):
@@ -117,6 +131,7 @@ def edit(id):
 
     return render_template('edit.html', post=post)
 
+
 @app.route('/<int:id>/delete', methods=('POST',))
 def delete(id):
     post = get_post(id)
@@ -127,10 +142,6 @@ def delete(id):
     flash('"{}" was successfully deleted!'.format(post['title']))
     return redirect(url_for('index'))
 
-@app.route('/analytics')
-def analytics():
-     return render_template('analytics.html', title='Bootstrap Table'
-    )
 
 if __name__ == '__main__':  # pragma: no cover
     app.run(port=5001)

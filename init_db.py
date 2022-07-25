@@ -8,6 +8,13 @@ with open('schema.sql') as f:
 
 cur = connection.cursor()
 
+cur.execute("INSERT INTO temperatures (dateTemp, Temp) VALUES (?, ?)",
+            ('01/01/2015', '30.5')
+            )
+cur.execute("INSERT INTO temperatures (dateTemp, Temp) VALUES (?, ?)",
+            ('02/01/2015', '31.4')
+            )
+
 cur.execute("INSERT INTO posts (title, content) VALUES (?, ?)",
             ('First Post', 'Content for the first post')
             )

@@ -6,7 +6,6 @@ from pip import main
 
 # importer csv
 
-
 def importer_csv():
     try:
         df = pd.read_csv(
